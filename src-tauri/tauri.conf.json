@@ -3,7 +3,7 @@
   "build": {
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run start",
-    "devPath": "http://localhost:3000",
+    "devPath": "../ui",
     "distDir": "../ui",
     "withGlobalTauri": true
   },
@@ -14,6 +14,12 @@
   "tauri": {
     "allowlist": {
       "all": true
+    },
+    "pattern": {
+      "use": "isolation",
+      "options": {
+        "dir": "./dist-isolation"
+      }
     },
     "bundle": {
       "active": true,
