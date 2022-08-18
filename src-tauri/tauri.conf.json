@@ -16,10 +16,7 @@
       "all": true
     },
     "pattern": {
-      "use": "isolation",
-      "options": {
-        "dir": "./dist-isolation"
-      }
+      "use": "brownfield"
     },
     "bundle": {
       "active": true,
