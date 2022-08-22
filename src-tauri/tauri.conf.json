@@ -3,13 +3,13 @@
   "build": {
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run start",
-    "devPath": "../ui",
-    "distDir": "../ui",
-    "withGlobalTauri": true
+    "devPath": "http://localhost:3000",
+    "distDir": "./../build",
+    "withGlobalTauri": false
   },
   "package": {
     "productName": "tauri-app",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "tauri": {
     "allowlist": {
