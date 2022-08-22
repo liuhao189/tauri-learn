@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible"
-      content="IE=edge">
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-    <title>tauri learn</title>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tauri learn</title>
+</head>
 
-  <body>
-    <h1>Welcome from tauri</h1>
-    <script>
-      const invoke = window.__TAURI__.invoke;
-      invoke('greet', {
-        name: 'World'
-      }).then(res => {
+<body>
+  <h1>Welcome from tauri</h1>
+  <script>
+    const invoke = window.__TAURI__.invoke;
+    invoke("my_apphandler").then(res => {
         alert(res);
       });
+      // invoke('open_devtools').then(res => {
+      //   alert(res);
+      // })
 
-      invoke('custom_command_error_handle').catch(err => {
-        alert(err);
-      });
-    </script>
-  </body>
+    // invoke('greet', {
+    //   name: 'World'
+    // }).then(res => {
+    //   alert(res);
+    // });
+
+    // invoke('custom_command_error_handle').catch(err => {
+    //   alert(err);
+    // });
+  </script>
+</body>
 
 </html>
