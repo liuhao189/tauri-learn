@@ -64,6 +64,11 @@
         "resizable": true,
         "title": "Tauri App",
         "width": 800
+      },
+      {
+        "label": "external",
+        "title": "lingxi-office",
+        "url": "https://lingxi.office.163.com"
       }
     ]
   }

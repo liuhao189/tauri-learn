@@ -3,27 +3,61 @@
     windows_subsystem = "windows"
 )]
 
-use tauri::Manager;
+// use tauri::{Manager, Window};
 
-#[derive(Clone,serde::Serialize)]
+#[derive(Clone, serde::Serialize)]
 struct Payload {
-  message: String,
+    message: String,
 }
+
+//只在调用该命令的窗口触发周期事件
+// #[tauri::command]
+// fn init_process(window: Window) {
+//   std::thread::spawn(move || {
+//     loop {
+//       window.emit("event-name", Payload { message: "Tauri is awesome from backend!".into() }).unwrap();
+//     }
+//   });
+// }
 
 fn main() {
-  tauri::Builder::default()
-    .setup(|app| {
-      let _id = app.listen_global("event-name",|event|{
-        println!("got event-name with payload {:?}", event.payload());
-      });
-      // app.unlisten(id)
-      app.emit_all("event-name",Payload { message:"Tauri is awesome!".into() }).unwrap();
-      Ok(())
-    })
-    .invoke_handler(tauri::generate_handler![greet,custom_command_error_handle])
-    .run(tauri::generate_context!())
-    .expect("error while running tauri application");
+    tauri::Builder::default()
+        .setup(|app| {
+            tauri::WindowBuilder::new(
+                app,
+                "external",
+                tauri::WindowUrl::External("https://www.baidu.com".parse().unwrap()),
+            )
+            .build()?;
+            tauri::WindowBuilder::new(app, "local", tauri::WindowUrl::App("index.html".into()))
+                .build()?;
+            Ok(())
+        })
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
 }
+
+// fn main() {
+//   tauri::Builder::default()
+//     .setup(|app| {
+//       let main_window = app.get_window("main").unwrap();
+//       main_window.listen("event-name", |event| {
+//         println!("got window event-name with payload {:?}",event.payload());
+//       });
+
+//       main_window.emit("event_name", Payload { message: "Tauri is awesome!".into() }).unwrap();
+
+//       // let _id = app.listen_global("event-name",|event|{
+//       //   println!("got event-name with payload {:?}", event.payload());
+//       // });
+//       // // app.unlisten(id)
+//       // app.emit_all("event-name",Payload { message:"Tauri is awesome!".into() }).unwrap();
+//       Ok(())
+//     })
+//     .invoke_handler(tauri::generate_handler![init_process])
+//     .run(tauri::generate_context!())
+//     .expect("error while running tauri application");
+// }
 
 // #[tauri::command]
 // fn greet(name: &str) -> String {

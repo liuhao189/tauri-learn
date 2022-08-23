@@ -6,10 +6,10 @@ import { listen, emit } from '@tauri-apps/api/event';
 
 listen('event-name', (ev) => {
   alert(`${ev.event}-${JSON.stringify(ev.payload)}`);
-})
+});
 
 setTimeout(() => {
-  emit('event-name', { message: 'Tauri is awesome' })
+  emit('event-name', { message: 'Tauri is awesome from frontend' })
 }, 1000);
 
 // setTimeout(() => {
