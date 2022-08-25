@@ -23,20 +23,31 @@ struct Payload {
 fn main() {
     tauri::Builder::default()
         .setup(|app| {
-            tauri::WindowBuilder::new(
-                app,
-                "external",
-                tauri::WindowUrl::External("https://www.baidu.com".parse().unwrap()),
-            )
-            .build()?;
-            tauri::WindowBuilder::new(app, "local", tauri::WindowUrl::App("index.html".into()))
-                .build()?;
+            // tauri::WindowBuilder::new(
+            //     app,
+            //     "external-2",
+            //     tauri::WindowUrl::External("https://www.bing.com/".parse().unwrap()),
+            // )
+            // .build()?;
+            // tauri::WindowBuilder::new(app, "local-3", tauri::WindowUrl::App("index.html".into()))
+            //     .build()?;
             Ok(())
         })
+        .invoke_handler(tauri::generate_handler![open_docs])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
+#[tauri::command]
+async fn open_docs(handler: tauri::AppHandle) {
+    tauri::WindowBuilder::new(
+        &handler,
+        "external-docs",
+        tauri::WindowUrl::External("https://www.bing.com/".parse().unwrap()),
+    )
+    .build()
+    .unwrap();
+}
 // fn main() {
 //   tauri::Builder::default()
 //     .setup(|app| {

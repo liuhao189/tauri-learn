@@ -1,16 +1,33 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { listen, emit } from '@tauri-apps/api/event';
+// import { listen, emit } from '@tauri-apps/api/event';
 // import { appWindow, WebviewWindow } from '@tauri-apps/api/window'; 
+// import { invoke } from '@tauri-apps/api';
+// invoke('open_docs');
+import { WebviewWindow } from '@tauri-apps/api/window'
 
-listen('event-name', (ev) => {
-  alert(`${ev.event}-${JSON.stringify(ev.payload)}`);
+const webview = new WebviewWindow('theUniqueLabel', {
+  url: 'https://lingxi.office.163.com/'
 });
+webview.once('tauri:://created', () => {
+  console.log('successfully created');
+})
+webview.once('tauri:://error', (e) => {
+  console.error(e);
+})
 
-setTimeout(() => {
-  emit('event-name', { message: 'Tauri is awesome from frontend' })
-}, 1000);
+const mainWindow = WebviewWindow.getByLabel('main');
+mainWindow?.onFileDropEvent(ev => {
+  console.log(ev);
+})
+// listen('event-name', (ev) => {
+//   alert(`${ev.event}-${JSON.stringify(ev.payload)}`);
+// });
+
+// setTimeout(() => {
+//   emit('event-name', { message: 'Tauri is awesome from frontend' })
+// }, 1000);
 
 // setTimeout(() => {
 //   emit('click', {
